@@ -15,23 +15,6 @@
  */
 package okhttp3.internal;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.net.IDN;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 import okhttp3.HttpUrl;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -39,6 +22,18 @@ import okio.Buffer;
 import okio.BufferedSource;
 import okio.ByteString;
 import okio.Source;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.IDN;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.nio.charset.Charset;
+import java.util.*;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /** Junk drawer of utility methods. */
 public final class Util {
@@ -184,6 +179,7 @@ public final class Util {
   }
 
   /** Returns an immutable copy of {@code list}. */
+  /*·µ»ØÒ»¸ö²»ÄÜ±äµÃ¼¯ºÏ¸±±¾*/
   public static <T> List<T> immutableList(List<T> list) {
     return Collections.unmodifiableList(new ArrayList<>(list));
   }
@@ -363,7 +359,7 @@ public final class Util {
 
   /**
    * Performs IDN ToASCII encoding and canonicalize the result to lowercase. e.g. This converts
-   * {@code â˜ƒ.net} to {@code xn--n3h.net}, and {@code WwW.GoOgLe.cOm} to {@code www.google.com}.
+   * {@code } to {@code xn--n3h.net}, and {@code WwW.GoOgLe.cOm} to {@code www.google.com}.
    * {@code null} will be returned if the input cannot be ToASCII encoded or if the result
    * contains unsupported ASCII characters.
    */

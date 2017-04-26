@@ -15,26 +15,13 @@
  */
 package okhttp3;
 
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 import okhttp3.internal.publicsuffix.PublicSuffixDatabase;
 import okio.Buffer;
 
-import static okhttp3.internal.Util.delimiterOffset;
-import static okhttp3.internal.Util.domainToAscii;
-import static okhttp3.internal.Util.skipLeadingAsciiWhitespace;
-import static okhttp3.internal.Util.skipTrailingAsciiWhitespace;
-import static okhttp3.internal.Util.verifyAsIpAddress;
+import java.net.*;
+import java.util.*;
+
+import static okhttp3.internal.Util.*;
 
 /**
  * A uniform resource locator (URL) with a scheme of either {@code http} or {@code https}. Use this
@@ -189,8 +176,8 @@ import static okhttp3.internal.Util.verifyAsIpAddress;
  * href="http://www.unicode.org/reports/tr46/#ToASCII">IDNA Mapping</a> transforms names to avoid
  * confusing characters. This includes basic case folding: transforming shouting {@code SQUARE.COM}
  * into cool and casual {@code square.com}. It also handles more exotic characters. For example, the
- * Unicode trademark sign (™) could be confused for the letters "TM" in {@code http://ho™mail.com}.
- * To mitigate this, the single character (™) maps to the string (tm). There is similar policy for
+ * Unicode trademark sign () could be confused for the letters "TM" in {@code http://homail.com}.
+ * To mitigate this, the single character () maps to the string (tm). There is similar policy for
  * all of the 1.1 million Unicode code points. Note that some code points such as "\ud83c\udf69" are
  * not mapped and cannot be used in a hostname.
  *
