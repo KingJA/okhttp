@@ -15,28 +15,6 @@
  */
 package okhttp3;
 
-import java.net.MalformedURLException;
-import java.net.Proxy;
-import java.net.ProxySelector;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.security.GeneralSecurityException;
-import java.security.KeyStore;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
-import javax.net.SocketFactory;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.net.ssl.X509TrustManager;
 import okhttp3.internal.Internal;
 import okhttp3.internal.Util;
 import okhttp3.internal.cache.InternalCache;
@@ -47,6 +25,15 @@ import okhttp3.internal.platform.Platform;
 import okhttp3.internal.tls.CertificateChainCleaner;
 import okhttp3.internal.tls.OkHostnameVerifier;
 import okhttp3.internal.ws.RealWebSocket;
+
+import javax.net.SocketFactory;
+import javax.net.ssl.*;
+import java.net.*;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Factory for {@linkplain Call calls}, which can be used to send HTTP requests and read their
@@ -432,32 +419,32 @@ public class OkHttpClient implements Cloneable, Call.Factory, WebSocket.Factory 
   }
 
   public static final class Builder {
-    Dispatcher dispatcher;
-    Proxy proxy;
-    List<Protocol> protocols;
-    List<ConnectionSpec> connectionSpecs;
-    final List<Interceptor> interceptors = new ArrayList<>();
-    final List<Interceptor> networkInterceptors = new ArrayList<>();
+    Dispatcher dispatcher;//分发器
+    Proxy proxy;//代理
+    List<Protocol> protocols;//协议
+    List<ConnectionSpec> connectionSpecs;//传输层版本和连接协议
+    final List<Interceptor> interceptors = new ArrayList<>();//拦截器
+    final List<Interceptor> networkInterceptors = new ArrayList<>();//网络拦截器
     EventListener.Factory eventListenerFactory;
-    ProxySelector proxySelector;
-    CookieJar cookieJar;
-    Cache cache;
-    InternalCache internalCache;
-    SocketFactory socketFactory;
-    SSLSocketFactory sslSocketFactory;
-    CertificateChainCleaner certificateChainCleaner;
-    HostnameVerifier hostnameVerifier;
-    CertificatePinner certificatePinner;
-    Authenticator proxyAuthenticator;
-    Authenticator authenticator;
-    ConnectionPool connectionPool;
-    Dns dns;
-    boolean followSslRedirects;
-    boolean followRedirects;
-    boolean retryOnConnectionFailure;
-    int connectTimeout;
-    int readTimeout;
-    int writeTimeout;
+    ProxySelector proxySelector;//代理选择
+    CookieJar cookieJar;//cookie
+    Cache cache;//缓存
+    InternalCache internalCache;//内部缓存
+    SocketFactory socketFactory;//socket 工厂
+    SSLSocketFactory sslSocketFactory;//安全套接层socket 工厂，用于HTTPS
+    CertificateChainCleaner certificateChainCleaner;// 验证确认响应证书 适用 HTTPS 请求连接的主机名
+    HostnameVerifier hostnameVerifier; //  主机名字确认
+    CertificatePinner certificatePinner;//  证书链
+    Authenticator proxyAuthenticator; //代理身份验证
+    Authenticator authenticator;// 本地身份验证
+    ConnectionPool connectionPool;//连接池,复用连接
+    Dns dns;//域名
+    boolean followSslRedirects;//安全套接层重定向
+    boolean followRedirects;//本地重定向
+    boolean retryOnConnectionFailure;//重试连接失败
+    int connectTimeout;//连接超时
+    int readTimeout;//read 超时
+    int writeTimeout;//write 超时
     int pingInterval;
 
     public Builder() {

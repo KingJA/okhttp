@@ -15,14 +15,15 @@
  */
 package okhttp3.internal.http;
 
-import java.io.IOException;
-import java.util.List;
 import okhttp3.Connection;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.internal.connection.RealConnection;
 import okhttp3.internal.connection.StreamAllocation;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * A concrete interceptor chain that carries the entire interceptor chain: all application
@@ -40,10 +41,10 @@ public final class RealInterceptorChain implements Interceptor.Chain {
   public RealInterceptorChain(List<Interceptor> interceptors, StreamAllocation streamAllocation,
       HttpCodec httpCodec, RealConnection connection, int index, Request request) {
     this.interceptors = interceptors;
-    this.connection = connection;
-    this.streamAllocation = streamAllocation;
-    this.httpCodec = httpCodec;
-    this.index = index;
+    this.connection = connection;//null
+    this.streamAllocation = streamAllocation;//null
+    this.httpCodec = httpCodec;//null
+    this.index = index;//0
     this.request = request;
   }
 
